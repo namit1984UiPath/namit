@@ -1,0 +1,172 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap2010:WorkflowViewState.IdRef="Main_1"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:ss="clr-namespace:System.Security;assembly=mscorlib"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:usba="clr-namespace:UiPath.SAP.BAPI.Activities;assembly=UiPath.SAP.BAPI.Activities"
+ xmlns:usbc="clr-namespace:UiPath.SAP.BAPI.ConnectionService;assembly=UiPath.SAP.BAPI"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Security</x:String>
+      <x:String>UiPath.SapBapiConnector.ConnectionService</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.SAP.BAPI.ConnectionService</x:String>
+      <x:String>UiPath.SAP.BAPI.ConnectionService.SapConnectionService.SapReturnTypes</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.SapBapiConnector</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
+      <AssemblyReference>UiPath.SAP.BAPI</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Demo Create Purchase Order BAPI" sap2010:WorkflowViewState.IdRef="Sequence_3">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="ss:SecureString" Name="str_SecurePassword" />
+      <Variable x:TypeArguments="usbc:IConnectionService" sap2010:Annotation.AnnotationText="Type 'usc:IConnectionService' ('clr-namespace:UiPath.SapBapiConnector.ConnectionService;assembly=UiPath.SapBapiConnector') could not be resolved and was automatically replaced with 'UnknownType'" Name="obj_SapConnection" />
+    </Sequence.Variables>
+    <TryCatch DisplayName="Try Catch" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+      <TryCatch.Finally>
+        <usba:SapCloseConnection DisplayName="Close SAP Connection" sap2010:WorkflowViewState.IdRef="SapCloseConnection_2" SapConnectionService="[obj_SapConnection]" />
+      </TryCatch.Finally>
+      <TryCatch.Try>
+        <Sequence sap2010:WorkflowViewState.IdRef="Sequence_6">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="sd:DataTable" Name="dt_ReadData" />
+            <Variable x:TypeArguments="sd:DataTable" Name="dt_Options" />
+            <Variable x:TypeArguments="sd:DataTable" Name="dt_Fields" />
+          </Sequence.Variables>
+          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Get Secure Password String" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="StringToSecureString.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <OutArgument x:TypeArguments="ss:SecureString" x:Key="SecurePassword">[str_SecurePassword]</OutArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="PlainTextPassword">Welcome1</InArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+          <usba:SapOpenConnection AppServer="18.209.242.206" Client="100" DisplayName="Open SAP Connection" sap2010:WorkflowViewState.IdRef="SapOpenConnection_2" Language="EN" Password="[str_SecurePassword]" SapConnectionService="[obj_SapConnection]" SystemNumber="00" User="S4h_fin" />
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_3">
+            <Assign.To>
+              <OutArgument x:TypeArguments="sd:DataTable">[dt_Options]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="sd:DataTable">[new DataTable()]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:AddDataColumn x:TypeArguments="x:String" Column="{x:Null}" DefaultValue="{x:Null}" AllowDBNull="True" AutoIncrement="False" ColumnName="TEXT" DataTable="[dt_Options]" DisplayName="Add Data Column" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_2" MaxLength="100" Unique="False" />
+          <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;BANFN EQ '0010000415'&quot;}]" DataTable="[dt_Options]" DisplayName="Add Data Row" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_4">
+            <Assign.To>
+              <OutArgument x:TypeArguments="sd:DataTable">[dt_Fields]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="sd:DataTable">[new DataTable()]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:AddDataColumn x:TypeArguments="x:String" Column="{x:Null}" DefaultValue="{x:Null}" AllowDBNull="True" AutoIncrement="False" ColumnName="FIELDNAME" DataTable="[dt_Fields]" DisplayName="Add Data Column" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_3" MaxLength="100" Unique="False" />
+          <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;BANFN&quot;}]" DataTable="[dt_Fields]" DisplayName="Add Data Row" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
+          <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;BNFPO&quot;}]" DataTable="[dt_Fields]" DisplayName="Add Data Row" sap2010:WorkflowViewState.IdRef="AddDataRow_3" />
+          <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;MATNR&quot;}]" DataTable="[dt_Fields]" DisplayName="Add Data Row" sap2010:WorkflowViewState.IdRef="AddDataRow_4" />
+          <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;MENGE&quot;}]" DataTable="[dt_Fields]" DisplayName="Add Data Row" sap2010:WorkflowViewState.IdRef="AddDataRow_5" />
+          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke BAPI_TRANSACTION_COMMIT workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="sapbapi\RFC_READ_TABLE.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="usbc:IConnectionService" x:Key="SapConnectionService">[obj_SapConnection]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="delimiter_in">,</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="no_data_in" />
+              <InArgument x:TypeArguments="x:String" x:Key="query_table_in">EBAN</InArgument>
+              <InArgument x:TypeArguments="x:Int32" x:Key="rowcount_in">0</InArgument>
+              <InArgument x:TypeArguments="x:Int32" x:Key="rowskips_in">0</InArgument>
+              <InOutArgument x:TypeArguments="sd:DataTable" x:Key="data_inout">[dt_ReadData]</InOutArgument>
+              <InOutArgument x:TypeArguments="sd:DataTable" x:Key="fields_inout">[dt_Fields]</InOutArgument>
+              <InOutArgument x:TypeArguments="sd:DataTable" x:Key="options_inout">[dt_Options]</InOutArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+          <ui:WriteCsvFile Encoding="{x:Null}" AddHeaders="True" DataTable="[dt_ReadData]" Delimitator="Comma" DisplayName="Write CSV" FilePath="test.csv" sap2010:WorkflowViewState.IdRef="WriteCsvFile_1" />
+        </Sequence>
+      </TryCatch.Try>
+    </TryCatch>
+    <sads:DebugSymbol.Symbol>d1VDOlxVc2Vyc1xiaGFuZFxEb2N1bWVudHNcVWlQYXRoXFNBUEJBUElEZW1vXFNBUEJBUElEZW1vXERlbW9fQkFQSV9SRkNfUkVBRF9UQUJMRS54YW1sOUkDiQEOAgEBTgWHARACAQJTCYUBFAIBBlAJUKkBAgEDWQteIwIBR18LX58CAgE9YAtnFAIBOWgLaKkCAgE1aQtpwwECATFqC3EUAgEtcgtyrQICASlzC3OyAQIBJXQLdLIBAgEhdQt1sgECAR12C3ayAQIBGXcLgwEjAgELhAELhAHPAQIBB1CRAVCmAQIBBFtVW2kCAUpcUFxYAgFJWb0BWdgBAgFIX+YBX/sBAgFFX0VfSgIBRF+TAl+cAgIBQ18tXz0CAUJfiQJfjQICAUFfugFf0AECAT9frAFfsAECAT5lOmVLAgE8YjtiRwIBOmiWAWicAQIBOGinAWi1AQIBNmloaXYCATNpNmldAgEybzpvSwIBMGw7bEYCAS5ylgFyoQECASxyrAFyuQECASpzWHNlAgEnczZzTQIBJnRYdGUCASN0NnRNAgEidVh1ZQIBH3U2dU0CAR52WHZlAgEbdjZ2TQIBGnlieXUCARd6S3pMAgEWfUl9SgIBFYEBU4EBXwIBE3xNfFECARKAAVKAAV0CARB+SX5KAgEPf1B/XQIBDXfLAXfoAQIBDIQBTIQBWwIBCYQBkQGEAZsBAgEI</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="SapCloseConnection_2" sap:VirtualizedContainerService.HintSize="200,22.4" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_8" sap:VirtualizedContainerService.HintSize="314,87" />
+      <sap2010:ViewStateData Id="SapOpenConnection_2" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="AddDataColumn`1_2" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="AddDataRow_1" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="AddDataColumn`1_3" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="AddDataRow_2" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="AddDataRow_3" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="AddDataRow_4" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="AddDataRow_5" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_10" sap:VirtualizedContainerService.HintSize="314,87" />
+      <sap2010:ViewStateData Id="WriteCsvFile_1" sap:VirtualizedContainerService.HintSize="314,87" />
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="336,1161">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="418,1370" />
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="440,1494">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Main_1" sap:VirtualizedContainerService.HintSize="480,1574" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>

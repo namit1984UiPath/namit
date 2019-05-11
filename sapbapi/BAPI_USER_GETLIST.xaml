@@ -1,0 +1,71 @@
+﻿<Activity x:Class="BAPI_USER_GETLIST" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:s1="clr-namespace:System;assembly=mscorlib" xmlns:sc="clr-namespace:System.Collections;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:scg1="clr-namespace:System.Collections.Generic;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:sd1="clr-namespace:System.Data;assembly=System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sd2="clr-namespace:System.Diagnostics;assembly=System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sd3="clr-namespace:System.Drawing;assembly=System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" xmlns:si="clr-namespace:System.IO;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sl="clr-namespace:System.Linq;assembly=System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:snm="clr-namespace:System.Net.Mail;assembly=System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sx="clr-namespace:System.Xml;assembly=System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sxl="clr-namespace:System.Xml.Linq;assembly=System.Xml.Linq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:usba="clr-namespace:UiPath.SAP.BAPI.Activities;assembly=UiPath.SAP.BAPI.Activities" xmlns:usbc="clr-namespace:UiPath.SAP.BAPI.ConnectionService;assembly=UiPath.SAP.BAPI" xmlns:usbcss="clr-namespace:UiPath.SAP.BAPI.ConnectionService.SapConnectionService.SapReturnTypes;assembly=UiPath.SAP.BAPI" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="SapConnectionService" Type="InArgument(usbc:IConnectionService)" />
+    <x:Property Name="ROWS_Out" Type="OutArgument(x:Int32)" />
+    <x:Property Name="USERLIST_In_Out" Type="InOutArgument(sd:DataTable)" />
+    <x:Property Name="BAPIRET2List" Type="OutArgument(scg:List(usbcss:BapiRet2))" />
+  </x:Members>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces serialized as XML namespaces</mva:VisualBasic.Settings>
+  <Sequence>
+    <Sequence.Variables>
+      <Variable x:TypeArguments="scg:List(sd:DataTable)" Name="DataTableList" />
+      <Variable x:TypeArguments="scg:List(sd:DataTable)" Name="Result" />
+      <Variable x:TypeArguments="sd:DataTable" Name="USERLIST_In_Out__DataTable" />
+      <Variable x:TypeArguments="x:Object" Name="BAPIRETURNObject" />
+    </Sequence.Variables>
+    <Assign x:TypeArguments="scg:List(sd:DataTable)" To="[DataTableList]" Value="[New List(Of DataTable)]" />
+    <Assign x:TypeArguments="sd:DataTable" To="[USERLIST_In_Out__DataTable]" Value="[New DataTable()]" />
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd:DataColumnCollection">[USERLIST_In_Out__DataTable.Columns]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["BapiName"]</InArgument>
+      <InArgument x:TypeArguments="s1:Type">[GetType(String)]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd:DataColumnCollection">[USERLIST_In_Out__DataTable.Columns]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["ParameterValue"]</InArgument>
+      <InArgument x:TypeArguments="s1:Type">[GetType(System.Data.DataTable)]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd:DataRowCollection">[USERLIST_In_Out__DataTable.Rows]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["USERLIST"]</InArgument>
+      <InArgument x:TypeArguments="sd:DataTable">[USERLIST_In_Out]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="scg:List(sd:DataTable)">[DataTableList]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="sd:DataTable">[USERLIST_In_Out__DataTable]</InArgument>
+    </InvokeMethod>
+    <usba:InvokeBAPI ApiName="[&quot;BAPI_USER_GETLIST&quot;]" BapiNameToFriendlyNameMapping="[New Dictionary(Of String, Dictionary(Of String, String)) From {{&quot;Input&quot;,New Dictionary(Of String, String) },{&quot;Output&quot;,New Dictionary(Of String, String) From {{&quot;ROWS&quot;,&quot;ROWS_Out&quot;}}},{&quot;InputOutput&quot;,New Dictionary(Of String, String) From {{&quot;USERLIST&quot;,&quot;USERLIST_In_Out&quot;}}}}]" DisplayName="Execute BAPI_USER_GETLIST" InputArgumentData="[DataTableList]" InputList="[New List(Of String)]" InputOutputList="[New List(Of String) From {&quot;USERLIST_In_Out&quot;}]" OutputList="[New List(Of String) From {&quot;ROWS_Out&quot;}]" Result="[Result]" SapBapiReturn="[BAPIRETURNObject]" SapConnectionService="[SapConnectionService]" />
+    <Assign>
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:Int32">[ROWS_Out]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:Int32">[CType(Result.ElementAt(0).Rows.Item(0).Item(0), Int32)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign>
+      <Assign.To>
+        <OutArgument x:TypeArguments="sd:DataTable">[USERLIST_In_Out]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="sd:DataTable">[CType(Result.ElementAt(1).Rows.Item(0).Item(0), DataTable)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign>
+      <Assign.To>
+        <OutArgument x:TypeArguments="scg:List(usbcss:BapiRet2)">[BAPIRET2List]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="scg:List(usbcss:BapiRet2)">[TryCast(CObj(BAPIRETURNObject), List(Of BapiRet2))]</InArgument>
+      </Assign.Value>
+    </Assign>
+  </Sequence>
+</Activity>

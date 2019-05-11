@@ -1,0 +1,54 @@
+﻿<Activity x:Class="BAPI_TRANSACTION_COMMIT" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:s1="clr-namespace:System;assembly=mscorlib" xmlns:sc="clr-namespace:System.Collections;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:scg1="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sd1="clr-namespace:System.Diagnostics;assembly=System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sd2="clr-namespace:System.Drawing;assembly=System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" xmlns:sd3="clr-namespace:System.Data;assembly=System.Data" xmlns:si="clr-namespace:System.IO;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sl="clr-namespace:System.Linq;assembly=System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:snm="clr-namespace:System.Net.Mail;assembly=System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sx="clr-namespace:System.Xml;assembly=System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sxl="clr-namespace:System.Xml.Linq;assembly=System.Xml.Linq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:usba="clr-namespace:UiPath.SAP.BAPI.Activities;assembly=UiPath.SAP.BAPI.Activities" xmlns:usbc="clr-namespace:UiPath.SAP.BAPI.ConnectionService;assembly=UiPath.SAP.BAPI" xmlns:usbcss="clr-namespace:UiPath.SAP.BAPI.ConnectionService.SapConnectionService.SapReturnTypes;assembly=UiPath.SAP.BAPI" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="SapConnectionService" Type="InArgument(usbc:IConnectionService)" />
+    <x:Property Name="wait_in" Type="InArgument(x:String)" />
+    <x:Property Name="RETURN_" Type="OutArgument(usbcss:BapiRet2)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces serialized as XML namespaces</mva:VisualBasic.Settings>
+  <Sequence>
+    <Sequence.Variables>
+      <Variable x:TypeArguments="scg1:List(sd3:DataTable)" Name="DataTableList" />
+      <Variable x:TypeArguments="scg1:List(sd3:DataTable)" Name="Result" />
+      <Variable x:TypeArguments="sd3:DataTable" Name="wait_in__DataTable" />
+      <Variable x:TypeArguments="x:Object" Name="BAPIRETURNObject" />
+    </Sequence.Variables>
+    <Assign x:TypeArguments="scg1:List(sd3:DataTable)" To="[DataTableList]" Value="[New List(Of DataTable)]" />
+    <Assign x:TypeArguments="sd3:DataTable" To="[wait_in__DataTable]" Value="[New DataTable()]" />
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd3:DataColumnCollection">[wait_in__DataTable.Columns]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["BapiName"]</InArgument>
+      <InArgument x:TypeArguments="s1:Type">[GetType(String)]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd3:DataColumnCollection">[wait_in__DataTable.Columns]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["ParameterValue"]</InArgument>
+      <InArgument x:TypeArguments="s1:Type">[GetType(System.String)]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd3:DataRowCollection">[wait_in__DataTable.Rows]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["WAIT"]</InArgument>
+      <InArgument x:TypeArguments="x:String">[wait_in]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="scg1:List(sd3:DataTable)">[DataTableList]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="sd3:DataTable">[wait_in__DataTable]</InArgument>
+    </InvokeMethod>
+    <usba:InvokeBAPI ApiName="[&quot;BAPI_TRANSACTION_COMMIT&quot;]" BapiNameToFriendlyNameMapping="[New Dictionary(Of String, Dictionary(Of String, String)) From {{&quot;Input&quot;,New Dictionary(Of String, String) From {{&quot;WAIT&quot;,&quot;wait_in&quot;}}},{&quot;Output&quot;,New Dictionary(Of String, String) },{&quot;InputOutput&quot;,New Dictionary(Of String, String) }}]" DisplayName="Execute BAPI_TRANSACTION_COMMIT" InputArgumentData="[DataTableList]" InputList="[New List(Of String) From {&quot;wait_in&quot;}]" InputOutputList="[New List(Of String)]" OutputList="[New List(Of String)]" Result="[Result]" SapBapiReturn="[BAPIRETURNObject]" SapConnectionService="[SapConnectionService]" />
+    <Assign>
+      <Assign.To>
+        <OutArgument x:TypeArguments="usbcss:BapiRet2">[RETURN_]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="usbcss:BapiRet2">[TryCast(CObj(BAPIRETURNObject), BapiRet2)]</InArgument>
+      </Assign.Value>
+    </Assign>
+  </Sequence>
+</Activity>

@@ -1,0 +1,160 @@
+﻿<Activity x:Class="BAPI_REQUISITION_GETDETAIL" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:s1="clr-namespace:System;assembly=mscorlib" xmlns:sc="clr-namespace:System.Collections;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:scg1="clr-namespace:System.Collections.Generic;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:sd1="clr-namespace:System.Data;assembly=System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sd2="clr-namespace:System.Diagnostics;assembly=System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sd3="clr-namespace:System.Drawing;assembly=System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" xmlns:si="clr-namespace:System.IO;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sl="clr-namespace:System.Linq;assembly=System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:snm="clr-namespace:System.Net.Mail;assembly=System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sx="clr-namespace:System.Xml;assembly=System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sxl="clr-namespace:System.Xml.Linq;assembly=System.Xml.Linq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:usba="clr-namespace:UiPath.SAP.BAPI.Activities;assembly=UiPath.SAP.BAPI.Activities" xmlns:usbc="clr-namespace:UiPath.SAP.BAPI.ConnectionService;assembly=UiPath.SAP.BAPI" xmlns:usbcss="clr-namespace:UiPath.SAP.BAPI.ConnectionService.SapConnectionService.SapReturnTypes;assembly=UiPath.SAP.BAPI" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="SapConnectionService" Type="InArgument(usbc:IConnectionService)" />
+    <x:Property Name="ITEM_TEXTS_In" Type="InArgument(x:String)" />
+    <x:Property Name="NUMBER_In" Type="InArgument(x:String)" />
+    <x:Property Name="REQUISITION_ITEMS_In_Out" Type="InOutArgument(sd:DataTable)" />
+    <x:Property Name="REQUISITION_TEXT_In_Out" Type="InOutArgument(sd:DataTable)" />
+    <x:Property Name="BAPIRETURNList" Type="OutArgument(scg:List(usbcss:BapiReturn))" />
+  </x:Members>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces serialized as XML namespaces</mva:VisualBasic.Settings>
+  <Sequence>
+    <Sequence.Variables>
+      <Variable x:TypeArguments="scg:List(sd:DataTable)" Name="DataTableList" />
+      <Variable x:TypeArguments="scg:List(sd:DataTable)" Name="Result" />
+      <Variable x:TypeArguments="sd:DataTable" Name="ITEM_TEXTS_In__DataTable" />
+      <Variable x:TypeArguments="sd:DataTable" Name="NUMBER_In__DataTable" />
+      <Variable x:TypeArguments="sd:DataTable" Name="REQUISITION_ITEMS_In_Out__DataTable" />
+      <Variable x:TypeArguments="sd:DataTable" Name="REQUISITION_TEXT_In_Out__DataTable" />
+      <Variable x:TypeArguments="x:Object" Name="BAPIRETURNObject" />
+    </Sequence.Variables>
+    <Assign x:TypeArguments="scg:List(sd:DataTable)" To="[DataTableList]" Value="[New List(Of DataTable)]" />
+    <Assign x:TypeArguments="sd:DataTable" To="[ITEM_TEXTS_In__DataTable]" Value="[New DataTable()]" />
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd:DataColumnCollection">[ITEM_TEXTS_In__DataTable.Columns]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["BapiName"]</InArgument>
+      <InArgument x:TypeArguments="s1:Type">[GetType(String)]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd:DataColumnCollection">[ITEM_TEXTS_In__DataTable.Columns]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["ParameterValue"]</InArgument>
+      <InArgument x:TypeArguments="s1:Type">[GetType(System.String)]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd:DataRowCollection">[ITEM_TEXTS_In__DataTable.Rows]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["ITEM_TEXTS"]</InArgument>
+      <InArgument x:TypeArguments="x:String">[ITEM_TEXTS_In]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="scg:List(sd:DataTable)">[DataTableList]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="sd:DataTable">[ITEM_TEXTS_In__DataTable]</InArgument>
+    </InvokeMethod>
+    <Assign x:TypeArguments="sd:DataTable" To="[NUMBER_In__DataTable]" Value="[New DataTable()]" />
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd:DataColumnCollection">[NUMBER_In__DataTable.Columns]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["BapiName"]</InArgument>
+      <InArgument x:TypeArguments="s1:Type">[GetType(String)]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd:DataColumnCollection">[NUMBER_In__DataTable.Columns]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["ParameterValue"]</InArgument>
+      <InArgument x:TypeArguments="s1:Type">[GetType(System.String)]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd:DataRowCollection">[NUMBER_In__DataTable.Rows]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["NUMBER"]</InArgument>
+      <InArgument x:TypeArguments="x:String">[NUMBER_In]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="scg:List(sd:DataTable)">[DataTableList]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="sd:DataTable">[NUMBER_In__DataTable]</InArgument>
+    </InvokeMethod>
+    <Assign x:TypeArguments="sd:DataTable" To="[REQUISITION_ITEMS_In_Out__DataTable]" Value="[New DataTable()]" />
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd:DataColumnCollection">[REQUISITION_ITEMS_In_Out__DataTable.Columns]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["BapiName"]</InArgument>
+      <InArgument x:TypeArguments="s1:Type">[GetType(String)]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd:DataColumnCollection">[REQUISITION_ITEMS_In_Out__DataTable.Columns]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["ParameterValue"]</InArgument>
+      <InArgument x:TypeArguments="s1:Type">[GetType(System.Data.DataTable)]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd:DataRowCollection">[REQUISITION_ITEMS_In_Out__DataTable.Rows]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["REQUISITION_ITEMS"]</InArgument>
+      <InArgument x:TypeArguments="sd:DataTable">[REQUISITION_ITEMS_In_Out]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="scg:List(sd:DataTable)">[DataTableList]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="sd:DataTable">[REQUISITION_ITEMS_In_Out__DataTable]</InArgument>
+    </InvokeMethod>
+    <Assign x:TypeArguments="sd:DataTable" To="[REQUISITION_TEXT_In_Out__DataTable]" Value="[New DataTable()]" />
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd:DataColumnCollection">[REQUISITION_TEXT_In_Out__DataTable.Columns]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["BapiName"]</InArgument>
+      <InArgument x:TypeArguments="s1:Type">[GetType(String)]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd:DataColumnCollection">[REQUISITION_TEXT_In_Out__DataTable.Columns]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["ParameterValue"]</InArgument>
+      <InArgument x:TypeArguments="s1:Type">[GetType(System.Data.DataTable)]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sd:DataRowCollection">[REQUISITION_TEXT_In_Out__DataTable.Rows]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">["REQUISITION_TEXT"]</InArgument>
+      <InArgument x:TypeArguments="sd:DataTable">[REQUISITION_TEXT_In_Out]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="scg:List(sd:DataTable)">[DataTableList]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="sd:DataTable">[REQUISITION_TEXT_In_Out__DataTable]</InArgument>
+    </InvokeMethod>
+    <usba:InvokeBAPI ApiName="[&quot;BAPI_REQUISITION_GETDETAIL&quot;]" BapiNameToFriendlyNameMapping="[New Dictionary(Of String, Dictionary(Of String, String)) From {{&quot;Input&quot;,New Dictionary(Of String, String) From {{&quot;ITEM_TEXTS&quot;,&quot;ITEM_TEXTS_In&quot;},{&quot;NUMBER&quot;,&quot;NUMBER_In&quot;}}},{&quot;Output&quot;,New Dictionary(Of String, String) },{&quot;InputOutput&quot;,New Dictionary(Of String, String) From {{&quot;REQUISITION_ITEMS&quot;,&quot;REQUISITION_ITEMS_In_Out&quot;},{&quot;REQUISITION_TEXT&quot;,&quot;REQUISITION_TEXT_In_Out&quot;}}}}]" DisplayName="Execute BAPI_REQUISITION_GETDETAIL" InputArgumentData="[DataTableList]" InputList="[New List(Of String) From {&quot;ITEM_TEXTS_In&quot;,&quot;NUMBER_In&quot;}]" InputOutputList="[New List(Of String) From {&quot;REQUISITION_ITEMS_In_Out&quot;,&quot;REQUISITION_TEXT_In_Out&quot;}]" OutputList="[New List(Of String)]" Result="[Result]" SapBapiReturn="[BAPIRETURNObject]" SapConnectionService="[SapConnectionService]" />
+    <Assign>
+      <Assign.To>
+        <OutArgument x:TypeArguments="sd:DataTable">[REQUISITION_ITEMS_In_Out]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="sd:DataTable">[CType(Result.ElementAt(0).Rows.Item(0).Item(0), DataTable)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign>
+      <Assign.To>
+        <OutArgument x:TypeArguments="sd:DataTable">[REQUISITION_TEXT_In_Out]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="sd:DataTable">[CType(Result.ElementAt(1).Rows.Item(0).Item(0), DataTable)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign>
+      <Assign.To>
+        <OutArgument x:TypeArguments="scg:List(usbcss:BapiReturn)">[BAPIRETURNList]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="scg:List(usbcss:BapiReturn)">[TryCast(CObj(BAPIRETURNObject), List(Of BapiReturn))]</InArgument>
+      </Assign.Value>
+    </Assign>
+  </Sequence>
+</Activity>
